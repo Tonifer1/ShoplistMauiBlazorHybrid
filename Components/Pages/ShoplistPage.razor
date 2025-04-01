@@ -1,0 +1,43 @@
+﻿@page "/shoplistpage"
+@using ShoplistMauiBlazorHybrid.Models
+@inject HttpClient Http
+
+<h3>Tuotteet ostoslistalla</h3>
+
+@if (shoplist == null)
+{
+    <p>Ladataan tuotteita...</p>
+}
+else if (!shoplist.Any())
+{
+    <p>Ei tuotteita listalla.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Tuote</th>
+                <th>Määrä</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in shoplist)
+            {
+                <tr>
+                    <td>@item.Item</td>
+                    <td>@item.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Shoplist>? shoplist;
+
+    protected override async Task OnInitializedAsync()
+    {
+        shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
+    }
+}
