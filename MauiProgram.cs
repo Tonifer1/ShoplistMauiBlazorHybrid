@@ -19,6 +19,7 @@ namespace ShoplistMauiBlazorHybrid
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
+            builder.Services.AddScoped(sp => new HttpClient());
 #endif
 
             return builder.Build();

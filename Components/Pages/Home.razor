@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using ShoplistMauiBlazorHybrid.Models
 
 
 <h3>Lisää tuote</h3>
@@ -8,9 +9,39 @@
 <br />
 <input @bind="amount" type="number" placeholder="Syötä määrä" />
 
+<br />
+<button @onclick="HandleAdd">Lisää tuote</button>
+
+<p>@infoText</p>
+@inject HttpClient Http
+
 
 @code {
     private string newItem = string.Empty;
     private int amount = 1;
+    private string infoText = "";
+
+    private async Task HandleAdd()
+    {
+        var newProduct = new Shoplist
+            {
+                Item = newItem,
+                Amount = amount
+            };
+
+        var response = await Http.PostAsJsonAsync("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/", newProduct);
+
+        if (response.IsSuccessStatusCode)
+        {
+            infoText = $"Tuote lisätty: {newItem}, {amount} kpl";
+            newItem = string.Empty;
+            amount = 1;
+        }
+        else
+        {
+            infoText = "Virhe lisättäessä tuotetta!";
+        }
+    }
+
 }
 
