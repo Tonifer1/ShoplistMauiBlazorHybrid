@@ -1,0 +1,16 @@
+﻿@page "/"
+
+
+<h3>Lisää tuote</h3>
+
+<input @bind="newItem" placeholder="Syötä tuotteen nimi" />
+
+<br />
+<input @bind="amount" type="number" placeholder="Syötä määrä" />
+
+
+@code {
+    private string newItem = string.Empty;
+    private int amount = 1;
+}
+
