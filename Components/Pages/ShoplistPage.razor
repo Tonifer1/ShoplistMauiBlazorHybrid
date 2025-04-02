@@ -2,6 +2,7 @@
 @using ShoplistMauiBlazorHybrid.Models
 @inject HttpClient Http
 
+<p>@infoText</p>
 <h3>Tuotteet ostoslistalla</h3>
 
 @if (shoplist == null)
@@ -27,7 +28,11 @@ else
                 <tr>
                     <td>@item.Item</td>
                     <td>@item.Amount</td>
+                    <td>
+                        <button @onclick="() => DeleteItem(item.Id)">Poista</button>
+                    </td>
                 </tr>
+
             }
         </tbody>
     </table>
@@ -35,9 +40,25 @@ else
 
 @code {
     private List<Shoplist>? shoplist;
-
+    private string infoText = "";
     protected override async Task OnInitializedAsync()
     {
         shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
     }
+
+    private async Task DeleteItem(int id)
+    {
+        var response = await Http.DeleteAsync($"https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Päivitetään lista
+            shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
+        }
+        else
+        {
+            infoText = "Poisto epäonnistui!";
+        }
+    }
+
 }
