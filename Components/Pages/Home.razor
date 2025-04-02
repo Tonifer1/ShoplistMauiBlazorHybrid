@@ -1,18 +1,20 @@
 ﻿@page "/"
 @using ShoplistMauiBlazorHybrid.Models
+<div class="form-container">
+    <h3>Lisää tuote</h3>
+
+    <input @bind="newItem" placeholder="Syötä tuotteen nimi" />
+
+    <br />
+    <input @bind="amount" type="number" placeholder="Syötä määrä" />
+
+    <br />
+    <button @onclick="HandleAdd">Lisää tuote</button>
+
+    <p>@infoText</p>
+</div>
 
 
-<h3>Lisää tuote</h3>
-
-<input @bind="newItem" placeholder="Syötä tuotteen nimi" />
-
-<br />
-<input @bind="amount" type="number" placeholder="Syötä määrä" />
-
-<br />
-<button @onclick="HandleAdd">Lisää tuote</button>
-
-<p>@infoText</p>
 @inject HttpClient Http
 
 

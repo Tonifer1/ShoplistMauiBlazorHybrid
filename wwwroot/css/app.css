@@ -1,4 +1,80 @@
-﻿html, body {
+﻿
+
+
+
+/*Main Layout*/
+
+.layout-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*Navbar asetukset*/
+
+.topnav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+.main-content {
+    background-color: white;
+    flex: 1;
+    padding: 20px;
+}
+
+
+
+/*Home asetukset*/
+
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/*Message*/
+
+.notification {
+    background-color: #28a745;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeOut 3s forwards;
+}
+
+/* Voit halutessasi animoida sen himmentymään */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+input, button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
