@@ -1,8 +1,4 @@
-﻿
-
-
-
-/*Main Layout*/
+﻿/*Main Layout*/
 
 .layout-root {
     display: flex;
@@ -17,6 +13,12 @@
     color: white;
     padding: 10px;
 }
+
+.navbar-toggler {
+    margin-top: 10px; /* siirtää alaspäin */
+    vertical-align: middle;
+}
+
 
 .main-content {
     background-color: white;
@@ -86,6 +88,9 @@ a, .btn-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius:3px;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

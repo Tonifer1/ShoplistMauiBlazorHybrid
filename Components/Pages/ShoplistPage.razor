@@ -29,7 +29,7 @@ else
                     <td>@item.Item</td>
                     <td>@item.Amount</td>
                     <td>
-                        <button class="btn-primary " @onclick="() => DeleteItem(item.Id)">Poista</button>
+                        <button class="btn-primary" @onclick="() => DeleteItem(item.Id)">Poista</button>
                     </td>
                 </tr>
 
@@ -59,14 +59,20 @@ else
         {
             // Päivitetään lista
              infoText = "Tuote poistettu onnistuneesti!";
+             StateHasChanged(); // näkymä päivittyy ennen kuin tyhjennetään
              shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
-             
+             await Task.Delay(3000);
+             infoText = "";
+             StateHasChanged(); // päivitys nollauksen jälkeen
             
         }
         else
         {
-            await Task.Delay(3000);
             infoText = "Poisto epäonnistui!";
+            StateHasChanged(); // näkymä päivittyy ennen kuin tyhjennetään
+            await Task.Delay(3000);
+            infoText = "";
+            StateHasChanged(); // päivitys nollauksen jälkeen
         }
     }
 
