@@ -2,7 +2,7 @@
 @using ShoplistMauiBlazorHybrid.Models
 @inject HttpClient Http
 
-<p>@infoText</p>
+@* <p>@infoText</p> *@
 <h3>Tuotteet ostoslistalla</h3>
 
 @if (shoplist == null)
@@ -15,7 +15,7 @@ else if (!shoplist.Any())
 }
 else
 {
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Tuote</th>
@@ -29,13 +29,18 @@ else
                     <td>@item.Item</td>
                     <td>@item.Amount</td>
                     <td>
-                        <button @onclick="() => DeleteItem(item.Id)">Poista</button>
+                        <button class="btn-primary" @onclick="() => DeleteItem(item.Id)">Poista</button>
                     </td>
                 </tr>
 
             }
         </tbody>
     </table>
+}
+
+@if (!string.IsNullOrEmpty(infoText))
+{
+    <div class="notification">@infoText</div>
 }
 
 @code {
@@ -53,11 +58,21 @@ else
         if (response.IsSuccessStatusCode)
         {
             // Päivitetään lista
-            shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
+             infoText = "Tuote poistettu onnistuneesti!";
+             StateHasChanged(); // näkymä päivittyy ennen kuin tyhjennetään
+             shoplist = await Http.GetFromJsonAsync<List<Shoplist>>("https://shoppingbackend-e2ckgsb5gsfjafak.swedencentral-01.azurewebsites.net/api/shoplist/");
+             await Task.Delay(3000);
+             infoText = "";
+             StateHasChanged(); // päivitys nollauksen jälkeen
+            
         }
         else
         {
             infoText = "Poisto epäonnistui!";
+            StateHasChanged(); // näkymä päivittyy ennen kuin tyhjennetään
+            await Task.Delay(3000);
+            infoText = "";
+            StateHasChanged(); // päivitys nollauksen jälkeen
         }
     }
 

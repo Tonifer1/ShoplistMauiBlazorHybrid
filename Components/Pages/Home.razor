@@ -1,18 +1,45 @@
 ﻿@page "/"
 @using ShoplistMauiBlazorHybrid.Models
+<div class="form-container">
+    <h3>Lisää tuote</h3>
+
+    <input @bind="newItem" placeholder="Syötä tuotteen nimi" />
+
+    <br />
+    <input @bind="amount" type="number" placeholder="Syötä määrä" />
+
+    <br />
+    <button @onclick="HandleAdd">Lisää tuote</button>
+
+    
+</div>
+@if (addedItems.Any())
+{
+    <h4>Lisätyt tuotteet tällä istunnolla:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tuote</th>
+                <th>Määrä</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in addedItems)
+            {
+                <tr>
+                    <td>@item.Item</td>
+                    <td>@item.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (!string.IsNullOrEmpty(infoText))
+{
+    <div class="notification">@infoText</div>
+}
 
 
-<h3>Lisää tuote</h3>
-
-<input @bind="newItem" placeholder="Syötä tuotteen nimi" />
-
-<br />
-<input @bind="amount" type="number" placeholder="Syötä määrä" />
-
-<br />
-<button @onclick="HandleAdd">Lisää tuote</button>
-
-<p>@infoText</p>
 @inject HttpClient Http
 
 
@@ -20,6 +47,8 @@
     private string newItem = string.Empty;
     private int amount = 1;
     private string infoText = "";
+    private List<Shoplist> addedItems = new(); // tallennetaan lisätyt tuotteet tällä istunnolla
+
 
     private async Task HandleAdd()
     {
@@ -34,6 +63,13 @@
         if (response.IsSuccessStatusCode)
         {
             infoText = $"Tuote lisätty: {newItem}, {amount} kpl";
+            StateHasChanged(); // näkymä päivittyy ennen kuin tyhjennetään
+            // Lisää myös näkymän omaan listaan
+            addedItems.Add(newProduct);
+            await Task.Delay(3000);
+            infoText = "";
+            StateHasChanged(); // päivitys nollauksen jälkeen
+
             newItem = string.Empty;
             amount = 1;
         }
