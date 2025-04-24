@@ -1,4 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿@* inherits LayoutComponentBase
+Tämä tekee MainLayout.razor-tiedostosta layout-komponentin, 
+eli sen jonka sisään muut sivut laitetaan (@layout MainLayout). *@
+
+@* <NavMenu /> on navigaatiopalkki.
+@Body on paikka, johon renderöityy kulloinkin aktiivinen sivu (esim. Home.razor).
+<CurrentTime /> on se komponentti, joka näyttää ajan. Se on laitettu tänne footer-osioon, 
+joten se näkyy kaikilla sivuilla alareunassa. *@
+
+@inherits LayoutComponentBase
 
 <div class="layout-root">
     <div class="topnav">
@@ -7,6 +16,9 @@
 
     <div class="main-content">
         @Body
+    </div>
+    <div class="footer">
+        <CurrentTime />
     </div>
 </div>
 
