@@ -1,0 +1,43 @@
+﻿<h3>CurrentTime</h3>
+
+@* OnInitialized()-metodi kutsutaan kun komponentti alustetaan:
+   System.Threading.Timer: UpdateTime-metodi ajetaan.null: ei anneta lisäparametreja.0: ensimmäinen ajo alkaa heti.
+   1000: seuraavat ajot tapahtuvat 1000 millisekunnin (1 sekunnin) välein. *@
+
+@* UpdateTime päivittää ajan: metodi päivittää currentTime-muuttujan ajan uudelleen.
+   InvokeAsync(StateHasChanged) kertoo Blazorille: "komponentin tila muuttui, pitää uudelleenrenderöidä". *@
+
+@* Dispose() lopettaa ajastimen kun komponentti poistetaan käytöstä:
+metodi vapauttaa resurssit kun komponentti poistetaan käytöstä (esim. käyttäjä siirtyy pois sivulta).
+Tärkeä muistaa, ettei ajastin jää "taustalle pyörimään" turhaan. *@
+
+
+
+
+@code {
+    private string currentTime = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");//currentTime: sisältää nykyhetken ajan ja päivämäärän merkkijonona
+    private System.Threading.Timer? timer; //timer: on ajastin, joka suorittaa metodin säännöllisesti (tässä: 1 sekunnin välein).
+
+
+
+    protected override void OnInitialized()
+    {
+        timer = new System.Threading.Timer(UpdateTime, null, 0, 1000);
+    }
+
+    private void UpdateTime(object? state)
+    {
+        currentTime = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}
+<p>🕒 @currentTime</p>
+
+@* currentTime on Razor-syntaksia, joka injektoi C#-muuttujan arvon HTML:ään. *@
+
+
