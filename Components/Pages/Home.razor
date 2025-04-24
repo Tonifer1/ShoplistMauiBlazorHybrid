@@ -1,4 +1,15 @@
-﻿@page "/"
+﻿@* @bind tekee kaksisuuntaisen yhteyden HTML-elementin ja C#-muuttujan välille.
+   Syötetty arvo = tallessa Blazor-komponentin muistissa. *@
+
+@* @bind on Blazorin kaksisuuntaisen sidonnan (two-way binding) ominaisuus.
+   kun käyttäjä muuttaa kentän arvoa, se päivittää automaattisesti taustalla olevaa muuttujaa *@
+
+@* newItem ja amount -muuttujat päivittyvät reaaliaikaisesti käyttäjän syötteen mukaan.
+
+Ei tarvita erillistä napin painalluksen yhteydessä tapahtuvaa arvon lukemista — tiedot ovat jo @code-lohkon muuttujissa. *@
+
+
+@page "/"
 @using ShoplistMauiBlazorHybrid.Models
 <div class="form-container">
     <h3>Lisää tuote</h3>
