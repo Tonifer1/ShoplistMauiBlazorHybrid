@@ -1,4 +1,8 @@
-﻿@page "/shoplistpage"
+﻿@* @page "/shoplistpage" tekee tästä komponentista navigoitavan sivun.
+@using ShoplistMauiBlazorHybrid.Models tuo mukaan Shoplist-luokan.
+@inject HttpClient Http antaa käyttöön Http-olion, jolla voidaan tehdä API-kutsuja. *@
+
+@page "/shoplistpage" 
 @using ShoplistMauiBlazorHybrid.Models
 @inject HttpClient Http
 
